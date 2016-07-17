@@ -1,0 +1,21 @@
+<script src="/authproxy/login/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/authproxy/login/bower_components/js-cookie/src/js.cookie.js"/></script>
+
+<script>
+	var authTokenCookieName = 'AuthProxyToken';
+	function setAuthToken() {
+		Cookies.set(authTokenCookieName, 'something');	
+	}
+
+	function clearAuthToken() {
+		Cookies.remove(authTokenCookieName);
+	}
+</script>
+
+<body>
+	Login page!
+
+	<input type="button" onclick="setAuthToken()" value="Set auth token">
+	<input type="button" onclick="clearAuthToken()" value="Clear auth token">
+</body>
+
