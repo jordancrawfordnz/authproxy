@@ -1,6 +1,6 @@
 var express = require('express');
 var jsonfile = require('jsonfile');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser')
@@ -44,7 +44,8 @@ var users = {};
 configuration.users.forEach(function(details) {
 	if (details.password) {
 		// Bcrypt the password.
-		details.hashedPassword = bcrypt.hashSync(details.password, saltRounds);
+		var salt = bcrypt.genSaltSync(saltRounds);
+		details.hashedPassword = bcrypt.hashSync(details.password, salt);
 		delete details.password; // remove the plain text password.
 		needsSave = true;
 	} else if (!details.hashedPassword) {
@@ -77,7 +78,8 @@ function generateSecret(user) {
 }
 
 // Check the users credentials. If valid, provide a token.
-app.post('/login', function(req, res) {
+app.post('/dologin', function(req, res) {
+	console.log('do login');
 	var username = req.body.username;
 	var password = req.body.password;
 
@@ -115,7 +117,7 @@ app.post('/login', function(req, res) {
 // Check the token in the cookies is valid.
 app.get('/auth', function(req, res) {
 	// Check the cookie provided with the request.
-	var token = req.cookies.authproxytoken;
+	var token = req.cookies.AuthProxyToken;
 
 	// If no cookie, respond with an authentication error.
 	if (!token) {

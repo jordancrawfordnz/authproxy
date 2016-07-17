@@ -9,9 +9,10 @@ COPY package.json /authserver/package.json
 RUN cd /authserver && npm install
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY simpleserver.js /authserver/simpleserver.js
+COPY authenticationserver.js /authserver/authenticationserver.js
 
 # TODO: Support automatically building the frontend, including pulling bower resources.
 COPY loginpage/ /loginpage
+COPY config.json /config.json
 
-CMD nginx && node /authserver/simpleserver.js
+CMD nginx && node /authserver/authenticationserver.js /config.json

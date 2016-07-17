@@ -3,19 +3,68 @@
 
 <script>
 	var authTokenCookieName = 'AuthProxyToken';
-	function setAuthToken() {
-		Cookies.set(authTokenCookieName, 'something');	
+	
+	function usernameField() {
+		return $('#username');
 	}
 
-	function clearAuthToken() {
-		Cookies.remove(authTokenCookieName);
+	function passwordField() {
+		return $('#password');
 	}
+
+	function loginField() {
+		return $('#login');
+	}
+
+	$(document).ready(function() {
+		loginField().click(login);
+
+		usernameField().on('input', updateLoginFieldState);
+		passwordField().on('input', updateLoginFieldState);
+		updateLoginFieldState();
+	});
+
+	function updateLoginFieldState() {
+		if (usernameField().val() && passwordField().val()) {
+			loginField().removeAttr('disabled');
+		} else {
+			loginField().attr('disabled', 'disabled');
+		}
+	}
+
+	function login() {
+		var username = usernameField().val();
+		var password = passwordField().val();
+
+		console.log('username: ' + username);
+		console.log('password: ' + password);
+
+		// Make a login request.
+		$.post('/authproxy/dologin/', {
+			username : usernameField().val(),
+			password : passwordField().val()
+		}).done(function(token) {
+			console.log('token');
+			console.log(token);
+		}).fail(function() {
+			console.log('failed');
+		});
+	}
+
+	// function setAuthToken() {
+	// 	Cookies.set(authTokenCookieName, 'something');	
+	// }
+
+	// function clearAuthToken() {
+	// 	Cookies.remove(authTokenCookieName);
+	// }
 </script>
 
 <body>
 	Login page!
 
-	<input type="button" onclick="setAuthToken()" value="Set auth token">
-	<input type="button" onclick="clearAuthToken()" value="Clear auth token">
+	<input id="username" type="text" placeholder="Username">
+	<input id="password" type="password" placeholder="Password">
+	<input id="login" type="button" value="Login">
 </body>
 
