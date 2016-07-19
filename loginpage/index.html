@@ -1,6 +1,6 @@
-<script src="/authproxy/login/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/authproxy/login/bower_components/js-cookie/src/js.cookie.js"/></script>
-
+<script src="/authproxy/loginpage/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/authproxy/loginpage/bower_components/js-cookie/src/js.cookie.js"/></script>
+<title>Login</title>
 <script>
 	var authTokenCookieName = 'AuthProxyToken';
 	
@@ -40,24 +40,34 @@
 		console.log('password: ' + password);
 
 		// Make a login request.
-		$.post('/authproxy/dologin/', {
-			username : usernameField().val(),
-			password : passwordField().val()
-		}).done(function(token) {
-			console.log('token');
-			console.log(token);
-		}).fail(function() {
-			console.log('failed');
+
+		$.ajax('/authproxy/login', {
+			method: 'post',
+			dataType: 'json',
+			contentType: 'application/json',
+			success: function(token) {
+				// Set the token as a cookie.
+					// Cookies are used because these will be sent will be sent with all requests without any change to the proxied application.
+					// TODO: Set the correct expiry date.
+				Cookies.set(authTokenCookieName, token.token);
+
+				// Login successful.
+					// TODO: Show a message about successful login until the page reloads?
+
+				// Reload the page so the user will be let through using their cookie.
+				location.reload();
+			},
+			fail: function() {
+				console.log('failed');
+
+				// TODO: Display a failure message.
+			},
+			data: JSON.stringify({
+				username : usernameField().val(),
+				password : passwordField().val()
+			})
 		});
 	}
-
-	// function setAuthToken() {
-	// 	Cookies.set(authTokenCookieName, 'something');	
-	// }
-
-	// function clearAuthToken() {
-	// 	Cookies.remove(authTokenCookieName);
-	// }
 </script>
 
 <body>

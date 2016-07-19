@@ -6,13 +6,17 @@ RUN apt-get install nano vim -y
 
 RUN mkdir /authserver
 COPY package.json /authserver/package.json
-RUN cd /authserver && npm install
+RUN cd /authserver && npm install && npm install -g bower
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY authenticationserver.js /authserver/authenticationserver.js
 
 # TODO: Support automatically building the frontend, including pulling bower resources.
 COPY loginpage/ /loginpage
+
+# Copy the example config.
 COPY config.json /config.json
+
+RUN cd /loginpage && bower install --allow-root
 
 CMD nginx && node /authserver/authenticationserver.js /config.json

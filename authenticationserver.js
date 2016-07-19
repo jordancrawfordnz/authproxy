@@ -78,11 +78,10 @@ function generateSecret(user) {
 }
 
 // Check the users credentials. If valid, provide a token.
-app.post('/dologin', function(req, res) {
-	console.log('do login');
+app.post('/authproxy/login', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
-
+	
 	if (!username || !password) {
 		res.status(401).send();
 		return;
@@ -115,7 +114,7 @@ app.post('/dologin', function(req, res) {
 });
 
 // Check the token in the cookies is valid.
-app.get('/auth', function(req, res) {
+app.get('/authproxy/auth', function(req, res) {
 	// Check the cookie provided with the request.
 	var token = req.cookies.AuthProxyToken;
 
@@ -127,13 +126,13 @@ app.get('/auth', function(req, res) {
 	
 	// Get the user for this token.
 	var decodedToken = jwt.decode(token);
-	if (!decodedToken || decodedToken.username) {
+	if (!decodedToken || !decodedToken.username) {
 		res.status(401).send();
 		return;
 	}
 
 	// If the user does not exist, respond with an authentication error.
-	var user = users[decodedToken];
+	var user = users[decodedToken.username];
 	if (!user) {
 		res.status(401).send();
 		return;
@@ -153,7 +152,7 @@ app.get('/auth', function(req, res) {
 });
 
 // Gets the configuration for the frontend from the configuration file.
-app.get('/loginconfig', function(req, res) {
+app.get('/authproxy/loginconfig', function(req, res) {
 	res.send(configuration.loginconfig);
 });
 
