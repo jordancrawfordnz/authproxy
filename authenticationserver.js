@@ -81,6 +81,7 @@ function generateSecret(user) {
 app.post('/authproxy/login', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
+	var rememberMe = req.body.rememberMe;
 	
 	if (!username || !password) {
 		res.status(401).send();
@@ -106,7 +107,7 @@ app.post('/authproxy/login', function(req, res) {
 	var token = jwt.sign({
 		username : username
 	}, generateSecret(user), {
-		expiresIn : '30d'
+		expiresIn : rememberMe ? '30d' : '3h'
 	});
 	res.send({
 		token : token
