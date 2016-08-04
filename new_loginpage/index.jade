@@ -1,0 +1,17 @@
+link(href='#{pathToResources}styles.min.css', rel='stylesheet')
+
+.container
+  .info
+    h1 #{title}
+    if subTitle
+      span #{subTitle}
+.form
+  if iconUrl
+    .thumbnail
+      img(src='#{iconUrl}')
+  form.login-form
+    input(type='text', placeholder='username')
+    input(type='password', placeholder='password')
+    button login
+
+script(src='#{pathToResources}scripts.min.js')
