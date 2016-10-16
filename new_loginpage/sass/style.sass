@@ -16,6 +16,8 @@ $form-width: 300px
   +border-top-radius(3px)
   +border-bottom-radius(3px)
   text-align: center
+  top: 50%
+  transform: translateY(-50%)
   .thumbnail
     background: $accent
     width: 150px
@@ -58,19 +60,9 @@ $form-width: 300px
     a
       color: $accent
       text-decoration: none    
-    
-.container
-  position: relative
-  z-index: 1
-  max-width: $form-width
-  margin: 0 auto
-  &:before,
-  &:after
-    content: ''
-    display: block
-    clear: both
   .info
-    margin: 50px auto
+    margin: 0px auto
+    margin-bottom: 25px
     text-align: center
     h1
       margin: 0 0 15px
@@ -86,6 +78,18 @@ $form-width: 300px
         text-decoration: none
       .fa
         color: $accent
+    
+.container
+  position: relative
+  z-index: 1
+  max-width: $form-width
+  margin: 0 auto
+  &:before,
+  &:after
+    content: ''
+    display: block
+    clear: both
+
 /* END Form */
         
 body
