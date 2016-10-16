@@ -10,18 +10,17 @@ module.exports = function (grunt) {
 	var config;
 	function getConfig() {
 		if (!config) {
-			config = require('./templateoptions.json');
+			config = require('/config/login_page.json');
 
 			// Set the defaults if not set.
 			if (config.title === undefined) {
 				config.title = 'Login';
 			}
-			if (config.pathToResources === undefined) {
-				config.pathToResources = '';
-			}
 			if (config.accent === undefined) {
 				config.accent = '#20A2E8';
 			}
+
+			config.pathToResources = '/authproxy/loginpage/';
 		}
 		return config;
 	}
@@ -113,8 +112,6 @@ module.exports = function (grunt) {
 	  	'jade',
 	  	'uglify'
 	]);
-
-	grunt.registerTask('buildProd', ['buildProd']);
 
 	grunt.registerTask('default', [
 		'build',

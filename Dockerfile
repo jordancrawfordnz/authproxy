@@ -1,22 +1,31 @@
 FROM nginx
 
-RUN apt-get update && apt-get install curl -y && curl -sL https://deb.nodesource.com/setup_4.x | bash -
+# Setup the system dependencies.
+RUN apt-get update && apt-get install curl ruby -y && curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get install nodejs -y
+
+RUN gem install sass
+RUN npm install -g bower
+RUN npm install -g grunt
+
+	# TODO Remove this, development only!
 RUN apt-get install nano vim -y
 
+# Setup the dependencies for the authentication server.
 RUN mkdir /authserver
-COPY package.json /authserver/package.json
-RUN cd /authserver && npm install && npm install -g bower
+COPY authserver/ /authserver
+RUN cd /authserver && npm install
 
+# Setup the NGINX configuration.
+	# TODO: Set this up dynamically on run.
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY authenticationserver.js /authserver/authenticationserver.js
+COPY start.sh /start.sh
 
-# TODO: Support automatically building the frontend, including pulling bower resources.
+
+# Setup the dependencies for the login page.
 COPY loginpage/ /loginpage
+RUN cd /loginpage && npm install
+#bower install --allow-root	
+	# TODO: Setup bower dependencies.
 
-# Copy the example config.
-COPY config.json /config.json
-
-RUN cd /loginpage && bower install --allow-root
-
-CMD nginx && node /authserver/authenticationserver.js /config.json
+CMD /start.sh

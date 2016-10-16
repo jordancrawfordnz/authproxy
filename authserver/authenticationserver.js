@@ -27,10 +27,6 @@ if (!configuration.users || Array.isArray(configuration.users)) {
 	requiredFieldsProvided = false;
 }
 
-if (!configuration.loginconfig || configuration.loginconfig.name) {
-	requiredFieldsProvided = false;
-}
-
 if (requiredFieldsProvided) {
 	console.log('Required field not provided.');
 	process.exit();
@@ -67,7 +63,7 @@ if (!usersValid) {
 
 // Re-write the config file if it needs to be saved.
 if (needsSave) {
-	jsonfile.writeFileSync(configFilePath, configuration);
+	jsonfile.writeFileSync(configFilePath, configuration, {spaces: 2});
 }
 
 // Generates the JWT token secret for a user.
@@ -150,11 +146,6 @@ app.get('/authproxy/auth', function(req, res) {
 			res.send();
 		}
 	});
-});
-
-// Gets the configuration for the frontend from the configuration file.
-app.get('/authproxy/loginconfig', function(req, res) {
-	res.send(configuration.loginconfig);
 });
 
 app.listen(3000, function() {
