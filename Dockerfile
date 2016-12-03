@@ -21,11 +21,11 @@ RUN cd /authserver && npm install
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY start.sh /start.sh
 
-
 # Setup the dependencies for the login page.
 COPY loginpage/ /loginpage
 RUN cd /loginpage && npm install
-#bower install --allow-root	
+RUN grunt build --config-path=/config/login_page.json --resources=/authproxy/loginpage/
+#bower install --allow-root
 	# TODO: Setup bower dependencies.
 
 CMD /start.sh

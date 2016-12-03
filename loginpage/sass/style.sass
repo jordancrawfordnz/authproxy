@@ -1,10 +1,7 @@
-@import "bourbon/bourbon"
-
 $white: #FFFFFF
 $black: #000000
-
 $form-width: 300px
-  
+
 /* Form */
 .form
   position: relative
@@ -13,8 +10,7 @@ $form-width: 300px
   max-width: $form-width
   margin: 0 auto 100px
   padding: 30px
-  +border-top-radius(3px)
-  +border-bottom-radius(3px)
+  border-radius: 3px
   text-align: center
   top: 50%
   transform: translateY(-50%)
@@ -24,9 +20,8 @@ $form-width: 300px
     height: 150px
     margin: 0 auto 30px
     padding: 25px
-    +border-top-radius(100%)
-    +border-bottom-radius(100%)
-    +box-sizing(border-box)
+    border-radius: 100%
+    box-sizing: border-box
     img
       display: block
       width: 100%
@@ -37,9 +32,8 @@ $form-width: 300px
     border: 0
     margin: 0 0 15px
     padding: 15px
-    +border-top-radius(3px)
-    +border-bottom-radius(3px)
-    +box-sizing(border-box)
+    border-radius: 3px
+    box-sizing: border-box
     font-size: 14px
   button
     outline: 0
@@ -47,11 +41,10 @@ $form-width: 300px
     width: 100%
     border: 0
     padding: 15px
-    +border-top-radius(3px)
-    +border-bottom-radius(3px)
+    border-radius: 3px
     color: $white
     font-size: 14px
-    +transition(all .3 ease)
+    transition: all .3 ease
     cursor: pointer
   .message
     margin: 15px 0 0
@@ -59,7 +52,7 @@ $form-width: 300px
     font-size: 12px
     a
       color: $accent
-      text-decoration: none    
+      text-decoration: none
   .info
     margin: 0px auto
     margin-bottom: 25px
@@ -78,7 +71,7 @@ $form-width: 300px
         text-decoration: none
       .fa
         color: $accent
-    
+
 .container
   position: relative
   z-index: 1
@@ -91,7 +84,7 @@ $form-width: 300px
     clear: both
 
 /* END Form */
-        
+
 body
   background: #ccc
   font-family: 'Roboto', sans-serif

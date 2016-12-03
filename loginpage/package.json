@@ -1,7 +1,7 @@
 {
   "name": "authproxyloginpage",
   "version": "1.0.0",
-  "description": "A Pen created at CodePen.io. You can find this one at http://codepen.io/andytran/pen/GJOBZj.",
+  "description": "",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-jade": "^1.0.0",
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "^2.0.0",

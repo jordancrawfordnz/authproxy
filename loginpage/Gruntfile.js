@@ -6,11 +6,14 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 
 	var config;
 	function getConfig() {
 		if (!config) {
-			config = require('/config/login_page.json');
+			var configPath = grunt.option('config-path');
+			config = require(configPath);
+			config.pathToResources = grunt.option('resources-prefix') || '';
 
 			// Set the defaults if not set.
 			if (config.title === undefined) {
@@ -19,8 +22,6 @@ module.exports = function (grunt) {
 			if (config.accent === undefined) {
 				config.accent = '#20A2E8';
 			}
-
-			config.pathToResources = '/authproxy/loginpage/';
 		}
 		return config;
 	}
@@ -57,6 +58,14 @@ module.exports = function (grunt) {
 			- use CDN references for libraries
 	*/
 	grunt.initConfig({
+		connect: {
+			server: {
+				options: {
+					port: 9000,
+					base: 'dist'
+				}
+			}
+		},
 		sass: {
 		    dist: {
 		    	files: {
@@ -95,7 +104,7 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			files: ['Gruntfile.js', 'sass/*.sass', 'index.jade', 'js/*.js', 'templateoptions.json'],
+			files: ['Gruntfile.js', 'sass/*.sass', 'index.jade', 'js/*.js'],
 			tasks: ['build']
 		}
 	});
@@ -109,12 +118,13 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', [
 		'buildSassWithConfig',
-	  	'jade',
-	  	'uglify'
+  	'jade',
+  	'uglify'
 	]);
 
 	grunt.registerTask('default', [
 		'build',
+		'connect',
 		'watch'
 	]);
 };
