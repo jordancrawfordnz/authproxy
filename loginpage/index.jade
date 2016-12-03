@@ -1,16 +1,18 @@
-link(href='#{pathToResources}styles.min.css', rel='stylesheet')
+head
+  link(href='#{pathToResources}styles.min.css', rel='stylesheet')
+  title #{title}
+body
+  .form
+    .info
+      h1 #{title}
+      if subTitle
+        span #{subTitle}
+    if iconUrl
+      .thumbnail
+        img(src='#{iconUrl}')
+    form.login-form
+      input(type='text', placeholder='Username')
+      input(type='password', placeholder='Password')
+      button Login
 
-.form
-  .info
-    h1 #{title}
-    if subTitle
-      span #{subTitle}
-  if iconUrl
-    .thumbnail
-      img(src='#{iconUrl}')
-  form.login-form
-    input(type='text', placeholder='Username')
-    input(type='password', placeholder='Password')
-    button Login
-
-script(src='#{pathToResources}scripts.min.js')
+  script(src='#{pathToResources}scripts.min.js')
