@@ -1,6 +1,7 @@
 # AuthProxy Login Page
 
 This is the login page for AuthProxy.
+
 Grunt is used to build the login page based on configuration or automatically re-build whilst developing.
 
 ## Command Line Options
@@ -8,9 +9,12 @@ Grunt is used to build the login page based on configuration or automatically re
 
 Required. The login page is built using the configuration file provided. This option specifies the relative file path to the login page configuration file.
 
+**``api-prefix``**
+Optional, defaults to no prefix. Specifies the prefix to use for the AuthProxy authentication API. This is useful in development to point the loginpage at an AuthProxy authserver. This is used in AuthProxy to provide the prefix for API calls.
+
 **``resources-prefix``**
 
-Optional, defaults to no prefix. Specifies the prefix to use for supplementary files, e.g.: JavaScript and CSS files. This is not needed in development, but is required in AuthProxy where these resources may not be served relative to the path of the login page.
+Optional, defaults to no prefix. Specifies the prefix to use for supplementary files, e.g.: JavaScript and CSS files. This is not needed in development, but is required in AuthProxy where these resources are not served relative to the path of the login page.
 
 ## Configuration
 A JSON file of options is provided to build the login page. This consists of the following options at the root level:

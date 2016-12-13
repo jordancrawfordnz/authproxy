@@ -7,12 +7,12 @@ var cookieParser = require('cookie-parser')
 
 const saltRounds = 10;
 var app = express();
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Get the file path from the command line arguments.
 if (process.argv.length !== 3) {
-	console.log('Invalid arguments.\nUse: node authenticationserver [config file path]');
+	console.log('Invalid arguments.\nUse: node authserver [config file path]');
 	process.exit();
 }
 var configFilePath = process.argv[2];
@@ -78,25 +78,25 @@ app.post('/authproxy/login', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	var rememberMe = req.body.rememberMe;
-	
+
 	if (!username || !password) {
 		res.status(401).send();
 		return;
 	}
 	// Find the user who is logging in.
 	var user = users[username];
-	
+
 	// If the user can't be found, respond with an authentication error.
 	if (!user) {
 		res.status(401).send();
-		return;	
+		return;
 	}
 
 	// Check the provided password against the user's password.
 	if (!bcrypt.compareSync(password, user.hashedPassword)) {
 		// If invalid, respond with an authentication error.
 		res.status(401).send();
-		return;	
+		return;
 	}
 
 	// If valid, generate a JWT token and return this.
@@ -120,7 +120,7 @@ app.get('/authproxy/auth', function(req, res) {
 		res.status(401).send();
 		return;
 	}
-	
+
 	// Get the user for this token.
 	var decodedToken = jwt.decode(token);
 	if (!decodedToken || !decodedToken.username) {
@@ -142,7 +142,7 @@ app.get('/authproxy/auth', function(req, res) {
 		if (error) {
 			res.status(401).send();
 		} else {
-			// Valid token. Respond with a 200 status code.	
+			// Valid token. Respond with a 200 status code.
 			res.send();
 		}
 	});

@@ -5,7 +5,6 @@ cd /loginpage
 grunt build
 
 # Setup and start NGINX.
-	# TODO: Setup NGINX config from config file.
 nginx
 
 # Start the authentication server.
