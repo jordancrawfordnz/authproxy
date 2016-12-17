@@ -2,23 +2,27 @@ head
   link(href='#{resourcesPrefix}styles.min.css', rel='stylesheet')
   title #{title}
 body
-  .form
-    .info
-      h1 #{title}
-      if subTitle
-        span #{subTitle}
-    if iconUrl
-      .thumbnail
-        img(src='#{iconUrl}')
-    form.login-form(action='javascript:void(0);')
-      input(type='text', placeholder='Username', id='username')
-      input(type='password', placeholder='Password', id='password')
-      .checkbox
-        input(type='checkbox', id='rememberMe', name='rememberMe')
-        label(for='rememberMe')
-          .text Remember me?
-      button(id='login') Login
-      
+    .container
+      .error
+        h2 Error
+        span Something
+      .form
+        .info
+          h1 #{title}
+          if subTitle
+            span #{subTitle}
+        if iconUrl
+          .thumbnail
+            img(src='#{iconUrl}')
+        form.login-form(action='javascript:void(0);')
+          input(type='text', placeholder='Username', id='username')
+          input(type='password', placeholder='Password', id='password')
+          .checkbox
+            input(type='checkbox', id='rememberMe', name='rememberMe')
+            label(for='rememberMe')
+              .text Remember me?
+          button(id='login') Login
+        
 //- TODO: Support failure message.
 
 script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js')

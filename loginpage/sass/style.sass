@@ -1,20 +1,22 @@
 $white: #FFFFFF
 $black: #000000
-$form-width: 300px
+$container-width: 360px
 $font-color: lighten($black, 30%)
 
-/* Form */
-.form
+.container
   position: relative
   z-index: 1
   background: $white
-  max-width: $form-width
   margin: 0 auto 100px
-  padding: 30px
   border-radius: 3px
-  text-align: center
   top: 50%
   transform: translateY(-50%)
+  max-width: $container-width
+
+.form
+  padding: 30px
+  text-align: center
+  position: relative
   .thumbnail
     background: $accent
     width: 150px
@@ -74,19 +76,6 @@ $font-color: lighten($black, 30%)
         text-decoration: none
       .fa
         color: $accent
-
-.container
-  position: relative
-  z-index: 1
-  max-width: $form-width
-  margin: 0 auto
-  &:before,
-  &:after
-    content: ''
-    display: block
-    clear: both
-
-/* END Form */
 
 body
   background: #ccc
