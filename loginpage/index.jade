@@ -13,10 +13,12 @@ body
     form.login-form(action='javascript:void(0);')
       input(type='text', placeholder='Username', id='username')
       input(type='password', placeholder='Password', id='password')
+      .checkbox
+        input(type='checkbox', id='rememberMe', name='rememberMe')
+        label(for='rememberMe')
+          .text Remember me?
       button(id='login') Login
       
-//- TODO: Remember me button.
-//- TODO: Setup ID's for fields.
 //- TODO: Support failure message.
 
 script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js')
