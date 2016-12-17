@@ -14,7 +14,9 @@ This file is of the format:
       "password" : "my_password"
     }
     ...
-  ]
+  ],
+  "port" : [optional port number, default: 3000],
+  "allowedOrigin" : [optional allow origin header for CORS. For development purposes when authserver and loginpage are running separately]
 }
 ```
 
@@ -31,7 +33,8 @@ After authserver hashes the password, these are of the format:
       "hashedPassword" : [hashed password gibberish]
     }
     ...
-  ]
+  ],
+  ...
 }
 ```
 

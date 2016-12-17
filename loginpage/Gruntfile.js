@@ -13,7 +13,8 @@ module.exports = function (grunt) {
 		if (!config) {
 			var configPath = grunt.option('config-path');
 			config = require(configPath);
-			config.pathToResources = grunt.option('resources-prefix') || '';
+			config.resourcesPrefix = grunt.option('resources-prefix') || '';
+			config.apiPrefix = grunt.option('api-prefix') || '';
 
 			// Set the defaults if not set.
 			if (config.title === undefined) {

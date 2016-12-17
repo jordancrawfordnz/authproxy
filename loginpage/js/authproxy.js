@@ -18,9 +18,9 @@ function rememberMeField() {
 
 $(document).ready(function() {
   loginField().click(login);
-
   usernameField().on('input', updateLoginFieldState);
   passwordField().on('input', updateLoginFieldState);
+
   updateLoginFieldState();
 });
 
@@ -42,20 +42,22 @@ function login() {
   console.log('password: ' + password);
   console.log('remember me: ' + rememberMe);
 
+  var data = JSON.stringify({
+    username : username,
+    password : password,
+    rememberMe : rememberMe
+  });
+
   // Make a login request.
-  $.ajax('/authproxy/login', {
+  $.ajax(apiPrefix + '/authproxy/login', {
     method: 'post',
     dataType: 'json',
     contentType: 'application/json',
     success: function(token) {
       // Set the token as a cookie.
         // Cookies are used because these will be sent will be sent with all requests without any change to the proxied application.
-        // TODO: Set the correct expiry date.
-
       var cookieOptions = {};
-      if (rememberMe) {
-        cookieOptions.expires = 30; // Expire the cookie in 30 days (same time as the token will expire)
-      }
+      if (rememberMe) cookieOptions.expires = 30; // Expire the cookie in 30 days (same time as the token will expire)
       Cookies.set(authTokenCookieName, token.token, cookieOptions);
 
       // Login successful.
@@ -69,10 +71,6 @@ function login() {
 
       // TODO: Display a failure message.
     },
-    data: JSON.stringify({
-      username : username,
-      password : password,
-      rememberMe : rememberMe
-    })
+    data: data
   });
 }

@@ -73,6 +73,18 @@ function generateSecret(user) {
 	return user.username + user.hashedPassword;
 }
 
+if(configuration.allowedOrigin) {
+	app.use(function(req, res, next) {
+		res.header('Access-Control-Allow-Origin', configuration.allowedOrigin);
+		res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+		next();
+	});
+
+	app.options('*', function(req, res, next) {
+		res.send(200);
+	});
+}
+
 // Check the users credentials. If valid, provide a token.
 app.post('/authproxy/login', function(req, res) {
 	var username = req.body.username;
@@ -148,6 +160,7 @@ app.get('/authproxy/auth', function(req, res) {
 	});
 });
 
-app.listen(3000, function() {
-	console.log('AuthProxy server is running.');
+var port = configuration.port || 3000;
+app.listen(port, function() {
+	console.log('AuthProxy server is running on port ' + port + '.');
 });
