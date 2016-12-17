@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var ConfigurationService = require('../lib/configurationservice.js');
+
+// Get the file path from the command line arguments.
+if (process.argv.length !== 3) {
+	console.log('Invalid arguments.\nUse: authserver [config file path]');
+	process.exit();
+}
+var configFilePath = process.argv[2];
+console.log('Loading config from: ' + configFilePath);
+
+try {
+  var configuration = new ConfigurationService(configFilePath)
+
+
+} catch(e) {
+  console.log(e);
+  process.exit();
+}
