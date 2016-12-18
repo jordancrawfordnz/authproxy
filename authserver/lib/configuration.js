@@ -1,35 +1,40 @@
 var jsonfile = require('jsonfile');
-var Users = require('../lib/users.js')
+var Users = require('users.js')
 
 Configuration.MISSING_REQUIRED_FIELD_MESSAGE = 'Required field not provided.';
+Configuration.FIELDS = ['users', 'port', 'allowedOrigin'];
 
 function Configuration(configFilePath) {
   this.configFilePath = configFilePath;
-  this._config = jsonfile.readFileSync(this.configFilePath);
 
-  if (!this._hasRequiredFields()) {
+  var rawConfig = jsonfile.readFileSync(this.configFilePath);
+  if (!this._hasRequiredFields(rawConfig)) {
     throw new Error(Configuration.MISSING_REQUIRED_FIELD_MESSAGE);
   }
 
-  this.users = new Users(this._config.users);
-  if (this.users.configNeedsSave) {
-    this._save();
-  }
-
-  if (this._config.port) {
-    this.port = this._config.port;
-  }
-  if (this._config.allowedOrigin) {
-    this.allowedOrigin = this._config.allowedOrigin;
-  }
+  Configuration.FIELDS.forEach(function(field) {
+    if (rawConfig[field]) {
+      this[field] = rawConfig[field];
+    }
+  }.bind(this));
 }
 
-Configuration.prototype._save = function() {
-  jsonfile.writeFileSync(this.configFilePath, this._config, {spaces: 2});
+Configuration.prototype._hasRequiredFields = function(rawConfig) {
+  return rawConfig.users && Array.isArray(rawConfig.users);
 };
 
-Configuration.prototype._hasRequiredFields = function() {
-  return this._config.users && Array.isArray(this._config.users);
+Configuration.prototype.save = function() {
+  jsonfile.writeFileSync(this.configFilePath, this.toJSON(), {spaces: 2});
+};
+
+Configuration.prototype.toJSON = function() {
+  var json = {};
+  Configuration.FIELDS.forEach(function(field) {
+    if (this[field]) {
+      json[field] = this[field];
+    }
+  }.bind(this));
+  return json;
 };
 
 module.exports = Configuration;

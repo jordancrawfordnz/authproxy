@@ -3,10 +3,9 @@ const saltRounds = 10;
 
 function PasswordHelper() { }
 
-PasswordHelper.prototype.hashPassword = function(user) {
+PasswordHelper.prototype.hashPassword = function(password) {
   var salt = bcrypt.genSaltSync(saltRounds);
-  user.hashedPassword = bcrypt.hashSync(user.password, salt);
-  delete user.password; // remove the plain text password.
+  return bcrypt.hashSync(password, salt);
 };
 
 PasswordHelper.getInstance = function() {
