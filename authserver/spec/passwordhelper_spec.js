@@ -1,6 +1,6 @@
-var PasswordService = require("../lib/passwordservice.js");
+var PasswordHelper = require("../lib/passwordhelper.js");
 
-describe("PasswordService", function() {
+describe("PasswordHelper", function() {
   beforeEach(function() {
       this.user = {
         "username" : "user1",
@@ -10,7 +10,7 @@ describe("PasswordService", function() {
 
   describe("hashPassword", function() {
     beforeEach(function() {
-      PasswordService.getInstance().hashPassword(this.user);
+      PasswordHelper.getInstance().hashPassword(this.user);
     });
 
     it("should remove the plaintext password", function() {

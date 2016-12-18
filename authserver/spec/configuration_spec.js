@@ -2,9 +2,9 @@ var tmp = require("tmp");
 var fs = require("fs-extra");
 var jsonfile = require("jsonfile");
 
-describe("ConfigurationService", function() {
-  var ConfigurationService = require("../lib/configurationservice.js");
-  var UserService = require("../lib/userservice.js");
+describe("Configuration", function() {
+  var Configuration = require("../lib/configuration.js");
+  var Users = require("../lib/users.js");
 
   var NO_USERS_CONFIG_PATH = "spec/test_config/no_users.json";
   var VALID_CONFIG_PATH = "spec/test_config/valid_config.json";
@@ -17,18 +17,18 @@ describe("ConfigurationService", function() {
 
     it("should throw an exception for missing required fields", function() {
       expect(function() {
-        new ConfigurationService(this.configurationPath)
-      }.bind(this)).toThrow(new Error(ConfigurationService.MISSING_REQUIRED_FIELD_MESSAGE));
+        new Configuration(this.configurationPath)
+      }.bind(this)).toThrow(new Error(Configuration.MISSING_REQUIRED_FIELD_MESSAGE));
     });
   });
 
   describe("with a valid configuration", function() {
     beforeEach(function() {
-      this.config = new ConfigurationService(VALID_CONFIG_PATH);
+      this.config = new Configuration(VALID_CONFIG_PATH);
     });
 
     it("should have users", function() {
-      expect(this.config.users).toEqual(jasmine.any(UserService))
+      expect(this.config.users).toEqual(jasmine.any(Users))
     });
 
     describe("the optional parameter", function() {
@@ -43,7 +43,7 @@ describe("ConfigurationService", function() {
     });
   });
 
-  // TODO: This isn't ideal! UserService is an implementation detail of ConfigurationService so end up partially testing ConfigurationService here too.
+  // TODO: This isn't ideal! Users is an implementation detail of Configuration so end up partially testing Configuration here too.
   describe("when the users need updating", function() {
     beforeEach(function() {
       this.tmpFile = tmp.fileSync();
@@ -53,7 +53,7 @@ describe("ConfigurationService", function() {
       expect(this.originalFileContents.users[0].password).toBeDefined();
       expect(this.originalFileContents.users[0].hashedPassword).not.toBeDefined();
 
-      this.config = new ConfigurationService(this.tmpFile.name);
+      this.config = new Configuration(this.tmpFile.name);
       expect(this.config.users.configNeedsSave).toBe(true);
       this.afterConstructFileContents = jsonfile.readFileSync(this.tmpFile.name);
     });
