@@ -1,11 +1,11 @@
 var express = require('express');
-var jsonfile = require('jsonfile');
-var bcrypt = require('bcryptjs');
+// var jsonfile = require('jsonfile');
+// var bcrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser')
 
-const saltRounds = 10;
+// const saltRounds = 10;
 var app = express();
 app.use(bodyParser.json());
 app.use(cookieParser());

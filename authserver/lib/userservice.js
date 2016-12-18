@@ -21,7 +21,7 @@ function UserService(usersConfiguration) {
   }.bind(this));
 
   if (!allUsersValid) {
-    throw UserService.NOT_ALL_USERS_VALID_MESSAGE;
+    throw new Error(UserService.NOT_ALL_USERS_VALID_MESSAGE);
   }
 }
 
@@ -32,5 +32,7 @@ UserService.prototype.passwordNeedsHashing = function(user) {
 UserService.prototype.isValid = function(user) {
   // A user is valid if they have a username, hashed password,
    // and no users with their username presently exist.
-  return user.username && user.hashedPassword && !this.users[user.username];
+  return user.username && user.hashedPassword && !this._users[user.username];
 };
+
+module.exports = UserService;

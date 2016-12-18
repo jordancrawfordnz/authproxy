@@ -15,3 +15,5 @@ PasswordService.getInstance = function() {
   }
   return PasswordService._instance;
 };
+
+module.exports = PasswordService;

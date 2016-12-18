@@ -8,7 +8,7 @@ function ConfigurationService(configFilePath) {
   this._config = jsonfile.readFileSync(this.configFilePath);
 
   if (!this._hasRequiredFields()) {
-    throw MISSING_REQUIRED_FIELD_MESSAGE;
+    throw new Error(ConfigurationService.MISSING_REQUIRED_FIELD_MESSAGE);
   }
 
   this.users = new UserService(this._config.users);
@@ -16,19 +16,20 @@ function ConfigurationService(configFilePath) {
     this._save();
   }
 
-  // TODO: Setup config fields for the optional variables.
+  if (this._config.port) {
+    this.port = this._config.port;
+  }
+  if (this._config.allowedOrigin) {
+    this.allowedOrigin = this._config.allowedOrigin;
+  }
 }
 
 ConfigurationService.prototype._save = function() {
-  jsonfile.writeFileSync(this.configFilePath, this.config, {spaces: 2});
+  jsonfile.writeFileSync(this.configFilePath, this._config, {spaces: 2});
 };
 
 ConfigurationService.prototype._hasRequiredFields = function() {
-  var requiredFieldsProvided = true;
-
-  if (!this.config.users || Array.isArray(config.users)) {
-  	requiredFieldsProvided = false;
-  }
-
-  return requiredFieldsProvided;
+  return this._config.users && Array.isArray(this._config.users);
 };
+
+module.exports = ConfigurationService;

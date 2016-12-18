@@ -12,9 +12,7 @@ console.log('Loading config from: ' + configFilePath);
 
 try {
   var configuration = new ConfigurationService(configFilePath)
-
-
 } catch(e) {
-  console.log(e);
+  console.log(e.message);
   process.exit();
 }

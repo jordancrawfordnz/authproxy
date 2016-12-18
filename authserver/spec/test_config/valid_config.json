@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "username": "user1",
+      "hashedPassword": "$2a$10$lZ1PL7ftKvGBmJlpn4rlX.sxQ1D945cxFbwdgn1iNcxorNi7wPTQa"
+    },
+    {
+      "username": "user2",
+      "hashedPassword": "$2a$10$VZRSdCUjbkbK0F0fylQEA.8fJxh92nTmDil3/l6XAO6SPEd9AKeZ6"
+    }
+  ],
+	"allowedOrigin": "*",
+  "port": 1234
+}
