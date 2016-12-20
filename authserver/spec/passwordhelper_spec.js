@@ -10,15 +10,17 @@ describe("PasswordHelper", function() {
 
   describe("hashPassword", function() {
     beforeEach(function() {
-      PasswordHelper.getInstance().hashPassword(this.user);
+      this.plainTextPassword = "mypassword";
+      this.hashedResult = PasswordHelper.getInstance().hashPassword(this.plainTextPassword);
     });
 
-    it("should remove the plaintext password", function() {
-      expect(this.user.password).not.toBeDefined();
+    it("should not be null or undefined", function() {
+      expect(this.hashedResult).toBeDefined();
+      expect(this.hashedResult).not.toBeNull();
     });
 
-    it("should set the hashedPassword", function() {
-      expect(this.user.hashedPassword).toBeDefined();
+    it("should not equal the plaintext password", function() {
+      expect(this.hashedResult).not.toEqual(this.plainTextPassword);
     });
   });
 });

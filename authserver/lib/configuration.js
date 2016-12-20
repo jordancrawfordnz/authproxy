@@ -1,5 +1,4 @@
 var jsonfile = require('jsonfile');
-var Users = require('users.js')
 
 Configuration.MISSING_REQUIRED_FIELD_MESSAGE = 'Required field not provided.';
 Configuration.FIELDS = ['users', 'port', 'allowedOrigin'];
