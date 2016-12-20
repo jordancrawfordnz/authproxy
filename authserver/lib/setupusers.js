@@ -11,24 +11,28 @@ SetupUsers.prototype.call = function() {
   var allUsersValid = true;
   var configNeedsSave = false;
   this.configuration.users.forEach(function(userDetails) {
-    if (!user.isValid() || this.users.findByUsername(userDetails.username)) {
+    if (this.users.findByUsername(userDetails.username)) {
       allUsersValid = false;
       return;
     }
 
-    var user = new User(user);
-    if (user.passwordNeedsHashing()) {
-      user.hashPassword();
-      configNeedsSave = true;
-    }
+    try {
+      var user = new User(user);
+      if (user.passwordNeedsHashing()) {
+        user.hashPassword();
+        configNeedsSave = true;
+      }
 
-    this.users.add(user);
+      this.users.add(user);
+    } catch() {
+      allUsersValid = false;
+    }
   }.bind(this));
 
   if (!allUsersValid) {
     throw new Error(SetupUsers.NOT_ALL_USERS_VALID_MESSAGE);
   }
-  
+
   if (configNeedsSave) {
     this.configuration.users = [];
     this.users.forEach(function(user) {
