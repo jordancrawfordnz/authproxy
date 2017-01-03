@@ -1,3 +1,5 @@
+var PasswordHelper = require('./passwordhelper.js')
+
 User.FIELDS = ['username', 'password', 'hashedPassword']
 User.MISSING_REQUIRED_FIELD_MESSAGE = "A required field was not provided."
 
@@ -24,13 +26,13 @@ function User(userConfig) {
 }
 
 User.prototype.passwordNeedsHashing = function() {
-  return !!user.password;
+  return !!this.password;
 };
 
 User.prototype.hashPassword = function() {
   if (this.passwordNeedsHashing()) {
-    this.hashedPassword = Helper.getInstance().hashPassword(this.password);
-    this.password = null;
+    this.hashedPassword = PasswordHelper.getInstance().hashPassword(this.password);
+    delete this.password;
   }
 };
 

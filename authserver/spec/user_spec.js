@@ -15,7 +15,11 @@ describe("User", function() {
         "no username" : {
           password: this.password
         },
+        "only hashed password" : {
+          hashedPassword: this.exampleHash
+        },
         "both password and hashedPassword" : {
+          username: this.username,
           password: this.password,
           hashedPassword: this.exampleHash
         }
@@ -32,41 +36,76 @@ describe("User", function() {
     }
   });
 
-// describe("with no password or hashed password", function() {
-//    it("throws an exception upon construction")
-//        expect(function() {
-//          new User({
-//            username: this.username
-//          });
-//        }.bind(this)).toThrow(new Error(Configuration.MISSING_REQUIRED_FIELD_MESSAGE));
-//      });
-//    });
-//
-//    describe("with both a password and hashed password", function() {
-//
-//    });
-//
-//    describe("with a plaintext password", function() {
-//      describe("hashPassword()", function() {
-//
-//      });
-//
-//      describe("passwordNeedsHashing()", function() {
-//
-//      });
-//
-//      describe("toJSON()", function() {
-//
-//      });
-//    });
-//
-//    describe("with no ")
-//
-//    describe("passwordNeedsHashing", function() {
-//
-//    });
-//
-//    describe("isValid", function() {
-//
-//    });
+  describe("with a plaintext password", function() {
+    beforeEach(function() {
+      this.user = new User({
+        username: this.username,
+        password: this.password
+      });
+    });
+
+    describe("passwordNeedsHashing()", function() {
+      it("should be true", function() {
+        expect(this.user.passwordNeedsHashing()).toBe(true);
+      });
+    });
+
+    describe("hashPassword()", function() {
+      beforeEach(function() {
+        this.user.hashPassword();
+      });
+
+      it("should have removed the plaintext password", function() {
+        expect(this.user.password).not.toBeDefined();
+      });
+
+      it("should have a hashed password that is not equal to the plaintext password", function() {
+        expect(this.user.hashedPassword).toBeDefined();
+        expect(this.user.hashedPassword).not.toEqual(this.exampleHash);
+      });
+    });
+
+    describe("toJSON()", function() {
+      it("should contain the username and password fields", function() {
+        expect(this.user.toJSON()).toEqual({
+          username: this.username,
+          password: this.password
+        });
+      });
+    });
+  });
+
+  describe("with a hashed password", function() {
+    beforeEach(function() {
+      this.user = new User({
+        username: this.username,
+        hashedPassword: this.exampleHash
+      });
+    });
+
+    describe("passwordNeedsHashing()", function() {
+      it("should be false", function() {
+        expect(this.user.passwordNeedsHashing()).toBe(false);
+      });
+    });
+
+    describe("hashPassword()", function() {
+      beforeEach(function() {
+        this.user.hashPassword();
+      });
+
+      it("should not have changed the hashed password", function() {
+        expect(this.user.hashedPassword).toEqual(this.exampleHash);
+      });
+    });
+
+    describe("toJSON()", function() {
+      it("should contain the username and hashedPassword fields", function() {
+        expect(this.user.toJSON()).toEqual({
+          username: this.username,
+          hashedPassword: this.exampleHash
+        });
+      });
+    });
+  });
 });
