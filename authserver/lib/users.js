@@ -1,9 +1,9 @@
-function Users(usersConfiguration) {
+function Users() {
   this._users = {};
 }
 
 Users.prototype.add = function(user) {
-  this._users.push(user);
+  this._users[user.username] = user;
 };
 
 Users.prototype.findByUsername = function(username) {
@@ -11,7 +11,9 @@ Users.prototype.findByUsername = function(username) {
 };
 
 Users.prototype.forEach = function(callback) {
-  this._users.values().forEach(callback);
+  Object.values(this._users).forEach(function(user) {
+    callback(user);
+  });
 };
 
 module.exports = Users;
