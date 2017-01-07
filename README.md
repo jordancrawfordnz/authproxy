@@ -1,5 +1,7 @@
 # AuthProxy
 
+## Note: This project is unfinished and is no longer under development. I recommend [Doorman](https://github.com/movableink/doorman) for this purpose.
+
 ### Building
 Use ``docker build -t jordancrawford/authproxy .`` from the root directory of the project.
 This will setup the image and download dependencies for the login page and authentication server.
